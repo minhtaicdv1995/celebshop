@@ -1,1 +1,10 @@
-{   "version": 2,   "builds": [     {       "src": "nuxt.config.js",       "use": "@nuxtjs/now-builder",       "config": {}     },     { "use": "@now/node", "src": "proxy.js" }   ] } 
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "nuxt.config.js",
+        "use": "@nuxtjs/now-builder",
+        "config": {}
+      }
+    ]
+  }

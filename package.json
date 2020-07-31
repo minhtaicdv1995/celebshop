@@ -1,0 +1,28 @@
+{
+  "name": "celeb-shop",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "export": "nuxt export",
+    "serve": "nuxt serve",
+    "deploy": "yarn build && now ./build",
+    "alias": "cd ./build && now alias"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bootstrap": "^4.5.0",
+    "bootstrap-vue": "^2.15.0",
+    "mhead-js": "^2.1.0",
+    "nuxt": "^2.13.0",
+    "vue-gallery-slideshow": "^1.5.0",
+    "vue-infinite-loading": "^2.4.5",
+    "vue-runtime-helpers": "^1.1.2",
+    "vue-slick-carousel": "^1.0.6"
+  },
+  "devDependencies": {
+    "eslint": "^7.5.0"
+  }
+}

@@ -7,10 +7,8 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "export": "nuxt export",
-    "serve": "nuxt serve",
-    "deploy": "yarn build && now ./build",
-    "alias": "cd ./build && now alias"
-  },
+    "serve": "nuxt serve"
+    },
   "dependencies": {
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",

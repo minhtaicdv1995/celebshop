@@ -33,7 +33,7 @@ const store = () =>{
         },
         actions:{
             nuxtServerInit(vuexContext,context){
-                return  axios.get( "https://apiceleb.trungkienit.com/wp-json/wc/v3/products?consumer_key=ck_fe7141bf2f63c8ac3b453f98ffac5aeab778cc06&consumer_secret=cs_f934b0959423d9cf6c4c97f0ec23f1e6f92a44a1&category=30")
+                return  axios.get( process.env.baseUrl + "/products?"+process.env.baseKey+"&category=30")
                 .then(data => {
                     vuexContext.commit('setProductSeller',data.data);
                 }).then(data=>{
@@ -57,9 +57,6 @@ const store = () =>{
             getProductViewd: (state) =>{
                 return state.productViewed;
             }
-          },
-          modules:{
-            products
           },
       })
 }

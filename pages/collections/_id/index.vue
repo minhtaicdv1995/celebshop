@@ -1389,12 +1389,12 @@
             <img src="@/assets/images/gotop.png" />
           </a>
         </div>
-        <infinite-loading @infinite="infiniteHandler" :identifier="infiniteId" spinner="waveDots">
-
-             <div slot="no-more"></div>
-             <div slot="no-results"></div>
-        </infinite-loading>
-
+        <no-ssr>
+          <infinite-loading @infinite="infiniteHandler" :identifier="infiniteId" spinner="waveDots">
+            <div slot="no-more"></div>
+            <div slot="no-results"></div>
+          </infinite-loading>
+        </no-ssr>
         <div class="text-center load-more-icon" id="load-more-icon">
           <img src="@/assets/images/loading.gif" />
         </div>
@@ -1452,7 +1452,7 @@ import { mapGetters } from "vuex";
 import Product from "@/components/product-loop";
 import InfiniteLoading from "vue-infinite-loading";
 import Vue from "vue";
-if (process.BROWSER_BUILD) {
+if (process.client) {
   Vue.use(InfiniteLoading);
 }
 
@@ -1467,7 +1467,7 @@ export default {
       baseQuery: "",
       pagination: 1,
       pagecurrent: 1,
-      infiniteId: +new Date()
+      infiniteId: +new Date(),
     };
   },
   async asyncData(context) {
@@ -1566,35 +1566,43 @@ export default {
         process.env.baseKey +
         sizeQuery +
         colorQuery +
-        priceQuery + "&category=" +
-       this.$route.params.id +
+        priceQuery +
+        "&category=" +
+        this.$route.params.id +
         "&per_page=10";
-    const countProductFilterUrl = process.env.baseUrl +"/products/categories/" + this.$route.params.id +"/?"+ process.env.baseKey + sizeQuery + colorQuery +priceQuery ;
-    axios
+      const countProductFilterUrl =
+        process.env.baseUrl +
+        "/products/categories/" +
+        this.$route.params.id +
+        "/?" +
+        process.env.baseKey +
+        sizeQuery +
+        colorQuery +
+        priceQuery;
+      axios
         .get(countProductFilterUrl)
         .then(function (responses) {
-         //   var countProductFilters =responses.data.length;
-            axios
-        .get(vm.baseQuery)
-        .then(function (response) {
-         
-          vm.productCollection = response.data;
-          vm.showLoadding = false;
-        vm.pagination = 1;
-      vm.pagecurrent = 1;
-      vm.infiniteId += 1;
-      vm.infoCol  = responses.data.count;
-    console.log(responses.data.count);
+          //   var countProductFilters =responses.data.length;
+          axios
+            .get(vm.baseQuery)
+            .then(function (response) {
+              vm.productCollection = response.data;
+              vm.showLoadding = false;
+              vm.pagination = 1;
+              vm.pagecurrent = 1;
+              vm.infiniteId += 1;
+              vm.infoCol = responses.data.count;
+              console.log(responses.data.count);
+            })
+            .catch(function (error) {
+              vm.error = error;
+            });
         })
         .catch(function (error) {
           vm.error = error;
         });
 
-        }).catch(function (error) {
-          vm.error = error;
-        });
- 
-/*
+      /*
    axios
         .get(vm.baseQuery)
         .then(function (response) {
@@ -1621,8 +1629,8 @@ export default {
       } else {
         this.pagination = Math.ceil(page);
       }
-   //   console.log(this.pagination);
-  //    console.log(this.pagecurrent);
+      //   console.log(this.pagination);
+      //    console.log(this.pagecurrent);
       if (this.pagination > 1 && this.pagecurrent < this.pagination) {
         this.baseQuery =
           process.env.baseUrl +
@@ -1632,29 +1640,26 @@ export default {
           this.$route.params.id +
           "&per_page=10&page=" +
           parseInt(parseInt(this.pagecurrent) + parseInt(1));
-           let vm = this;
-      axios
-        .get(vm.baseQuery)
-        .then(function (response) {
-          //  vm.productCollection.push(response.data);
+        let vm = this;
+        axios
+          .get(vm.baseQuery)
+          .then(function (response) {
+            //  vm.productCollection.push(response.data);
             vm.pagecurrent++;
             console.log(vm.pagecurrent);
-          const array1 = vm.productCollection;
-          const array2 = response.data;
-          console.log(array2);
-          const array3 = array1.concat(array2);
-          vm.productCollection = array3;
-          $state.loaded();
-        })
-        .catch(function (error) {
-          vm.error = error;
-        });
-
-      }else{
-          
-            $state.complete();
+            const array1 = vm.productCollection;
+            const array2 = response.data;
+            console.log(array2);
+            const array3 = array1.concat(array2);
+            vm.productCollection = array3;
+            $state.loaded();
+          })
+          .catch(function (error) {
+            vm.error = error;
+          });
+      } else {
+        $state.complete();
       }
-     
     },
   },
   created() {},

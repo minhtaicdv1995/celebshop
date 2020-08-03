@@ -54,12 +54,16 @@ export default {
     // Doc: https://bootstrap-vue.js.org
    // 'bootstrap-vue/nuxt',
   ],
+  
   /*
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
   */
   build: {
     
+  },
+  generate: {
+    fallback: true,
   },
   server: {
     port: 443, // default: 3000

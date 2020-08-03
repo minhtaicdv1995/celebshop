@@ -1389,12 +1389,12 @@
             <img src="@/assets/images/gotop.png" />
           </a>
         </div>
-        <no-ssr>
+       <client-only>
           <infinite-loading @infinite="infiniteHandler" :identifier="infiniteId" spinner="waveDots">
             <div slot="no-more"></div>
             <div slot="no-results"></div>
           </infinite-loading>
-        </no-ssr>
+       </client-only>
         <div class="text-center load-more-icon" id="load-more-icon">
           <img src="@/assets/images/loading.gif" />
         </div>
